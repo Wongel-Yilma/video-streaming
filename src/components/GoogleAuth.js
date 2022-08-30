@@ -10,18 +10,18 @@ class GoogleAuth extends React.Component {
   handleCallbackResponse = (response) => {
     console.log("Encoded JWR ID token:", response.credential);
     const userObject = jwt_decode(response.credential);
-    console.log(userObject);
+    console.log(userObject.sub);
     this.setState({ user: userObject, isSignedIn: true });
     document.getElementById("signInDiv").hidden = true;
-    this.onAuthChange();
+    this.onAuthChange(userObject.sub);
   };
   handleSignout = () => {
     this.setState({ user: {} });
     document.getElementById("signInDiv").hidden = false;
     this.onAuthChange();
   };
-  onAuthChange = () => {
-    if (!this.props.isSignedIn) this.props.signIn();
+  onAuthChange = (userId) => {
+    if (!this.props.isSignedIn) this.props.signIn(userId);
     else this.props.signOut();
   };
   componentDidMount() {

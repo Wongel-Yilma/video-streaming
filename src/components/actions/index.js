@@ -1,8 +1,10 @@
+import { useTransition } from "react";
 import { SIGN_OUT, SIGN_IN } from "./types";
 
-export const signIn = () => {
+export const signIn = (userId) => {
   return {
     type: SIGN_IN,
+    payload: userId,
   };
 };
 

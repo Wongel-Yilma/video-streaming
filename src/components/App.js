@@ -7,16 +7,9 @@ import StreamDelete from "./streams/StreamDelete";
 import StreamShow from "./streams/StreamShow";
 import Header from "./Header";
 import StreamDetails from "./streams/StreamDetails";
-import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
-import reducers from "./reducers";
-
-
-const store = createStore(reducers);
 
 const App = () => {
   return (
-    <Provider store ={store}>
     <div className="ui container">
       <BrowserRouter>
         <div>
@@ -30,7 +23,6 @@ const App = () => {
         </div>
       </BrowserRouter>
     </div>
-    </Provider>
   );
 };
 
