@@ -2,6 +2,7 @@ import React from "react";
 import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import { signIn, signOut } from "./actions";
+import { EDIT_STREAM } from "./actions/types";
 // import { GoolgeLogin } from "react-google-login";
 const client_id =
   "637032358404-ijjvts1e0d874p174o98rkkp3k92f7oe.apps.googleusercontent.com";
@@ -16,7 +17,7 @@ class GoogleAuth extends React.Component {
     this.onAuthChange(userObject.sub);
   };
   handleSignout = () => {
-    this.setState({ user: {} });
+    console.log("responding");
     document.getElementById("signInDiv").hidden = false;
     this.onAuthChange();
   };
@@ -29,15 +30,19 @@ class GoogleAuth extends React.Component {
       client_id: client_id,
       callback: this.handleCallbackResponse,
     });
-    window.google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      {
-        theme: "outline",
-        size: "large",
-      }
-    );
+    console.log(this.props.isSignedIn);
+    if (!this.props.isSignedIn) {
+      window.google.accounts.id.renderButton(
+        document.getElementById("signInDiv"),
+        {
+          theme: "outline",
+          size: "large",
+        }
+      );
+    }
   }
   renderAuthButton() {
+    console.log(this.props.isSignedIn);
     if (this.props.isSignedIn) {
       return (
         <button
@@ -48,7 +53,7 @@ class GoogleAuth extends React.Component {
         </button>
       );
     } else {
-      return;
+      return null;
     }
   }
   render() {
@@ -56,15 +61,21 @@ class GoogleAuth extends React.Component {
       <div>
         {this.renderAuthButton()}
 
-        <div id="signInDiv">Sign In</div>
+        <div
+          style={{ display: this.props.isSignedIn ? "none" : "block" }}
+          id="signInDiv"
+        >
+          Sign In
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return { isSignedIn: state.auth.isSignedIn };
 };
 
 export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
-//Object.keys(this.state.user).length != 0
+
