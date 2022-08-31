@@ -3,21 +3,17 @@ import jwt_decode from "jwt-decode";
 import { connect } from "react-redux";
 import { signIn, signOut } from "./actions";
 import { EDIT_STREAM } from "./actions/types";
-// import { GoolgeLogin } from "react-google-login";
+
 const client_id =
   "637032358404-ijjvts1e0d874p174o98rkkp3k92f7oe.apps.googleusercontent.com";
 class GoogleAuth extends React.Component {
-  //   state = { isSignedIn: null, user: {} };
   handleCallbackResponse = (response) => {
-    console.log("Encoded JWR ID token:", response.credential);
     const userObject = jwt_decode(response.credential);
-    console.log(userObject.sub);
     this.setState({ user: userObject, isSignedIn: true });
     document.getElementById("signInDiv").hidden = true;
     this.onAuthChange(userObject.sub);
   };
   handleSignout = () => {
-    console.log("responding");
     document.getElementById("signInDiv").hidden = false;
     this.onAuthChange();
   };
@@ -30,7 +26,7 @@ class GoogleAuth extends React.Component {
       client_id: client_id,
       callback: this.handleCallbackResponse,
     });
-    console.log(this.props.isSignedIn);
+
     if (!this.props.isSignedIn) {
       window.google.accounts.id.renderButton(
         document.getElementById("signInDiv"),
@@ -42,7 +38,6 @@ class GoogleAuth extends React.Component {
     }
   }
   renderAuthButton() {
-    console.log(this.props.isSignedIn);
     if (this.props.isSignedIn) {
       return (
         <button
@@ -73,7 +68,6 @@ class GoogleAuth extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return { isSignedIn: state.auth.isSignedIn };
 };
 
