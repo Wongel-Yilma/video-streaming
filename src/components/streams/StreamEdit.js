@@ -2,18 +2,25 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchStream, updateRecord } from "../actions";
 import StreamForm from "./StreamForm";
+import _ from "lodash";
 
 const StreamEdit = (props) => {
+  const id = props.match.params.id;
   useEffect(() => {
-    props.fetchStream(props.match.params.id);
+    props.fetchStream(id);
   }, []);
-  const onSubmit = (formValues) => {};
+  const onSubmit = (formValues) => {
+    props.updateRecord(id, formValues);
+  };
 
   console.log(props);
   return props.stream ? (
     <div>
       <h3>Edit A Stream</h3>
-      <StreamForm initialValues={props.stream} onSubmit={onSubmit} />
+      <StreamForm
+        initialValues={_.pick(props.stream, "title", "description")}
+        onSubmit={onSubmit}
+      />
     </div>
   ) : (
     <div>Loading...</div>

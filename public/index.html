@@ -32,6 +32,7 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <div id ='modal'></div>
 
     <!--
       This HTML file is a template.
@@ -44,31 +45,31 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      var client;
-      var access_token;
+      // var client;
+      // var access_token;
 
-      function initClient() {
-        client = google.accounts.oauth2.initTokenClient({
-          client_id: "637032358404-ijjvts1e0d874p174o98rkkp3k92f7oe.apps.googleusercontent.com",
-          scope: 'https://www.googleapis.com/auth/calendar.readonly \
-                  https://www.googleapis.com/auth/contacts.readonly',
-          callback: (tokenResponse) => {
-            access_token = tokenResponse.access_token;
-          },
-        });
-      }
-      function getToken() {
-        client.requestAccessToken();
-      }
-      function revokeToken() {
-        google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
-      }
-      function loadCalendar() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
-        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-        xhr.send();
-      }
+      // function initClient() {
+      //   client = google.accounts.oauth2.initTokenClient({
+      //     client_id: "637032358404-ijjvts1e0d874p174o98rkkp3k92f7oe.apps.googleusercontent.com",
+      //     scope: 'https://www.googleapis.com/auth/calendar.readonly \
+      //             https://www.googleapis.com/auth/contacts.readonly',
+      //     callback: (tokenResponse) => {
+      //       access_token = tokenResponse.access_token;
+      //     },
+      //   });
+      // }
+      // function getToken() {
+      //   client.requestAccessToken();
+      // }
+      // function revokeToken() {
+      //   google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
+      // }
+      // function loadCalendar() {
+      //   var xhr = new XMLHttpRequest();
+      //   xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
+      //   xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+      //   xhr.send();
+      // }
     </script>
   </body>
 </html>

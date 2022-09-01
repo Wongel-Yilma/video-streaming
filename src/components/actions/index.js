@@ -27,6 +27,7 @@ export const createStream = (formValues) => async (dispatch, getState) => {
   const { userId } = getState().auth;
   const response = streams.post("/streams", { ...formValues, userId });
   dispatch({ type: CREATE_STREAM, payload: response.data });
+  console.log(response.data);
   history.push("/");
 };
 
@@ -38,15 +39,20 @@ export const fetchStreams = () => async (dispatch) => {
 };
 
 export const fetchStream = (id) => async (dispatch) => {
+  console.log(id);
   const response = await streams.get(`/streams/${id}`);
+  console.log(response);
   dispatch({ type: FETCH_STREAM, payload: response.data });
 };
 
 export const updateRecord = (id, formValues) => async (dispatch) => {
-  const response = await streams.put(`/streams/${id}`, formValues);
+  const response = await streams.patch(`/streams/${id}`, formValues);
   dispatch({ type: EDIT_STREAM, payload: response.data });
+  history.push("/");
 };
 export const deleteStream = (id) => async (dispatch) => {
-  await streams.delete(`/streams/${id}`);
+  console.log(id);
+  const response = await streams.delete(`/streams/${id}`);
   dispatch({ type: DELETE_STREAM, payload: id });
+  history.push("/");
 };
